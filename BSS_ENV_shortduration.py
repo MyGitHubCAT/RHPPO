@@ -163,6 +163,8 @@ class ElectricVehicle(object):
     
     def Update(self,workingtime,emergencefactor):# Fixed mean, working time, and emergency factor. This update is called under multiple cases for working EVs: (1) the EV works for the first time and its energy consumption meets the expected demand; (2) the EV depletes its battery after initial operation but successfully swaps within the same stage and continues consuming the remaining demand; (3) the EV depletes its battery after initial operation but fails to swap and queues at the station, where the actual consumption is limited by the remaining battery SOC.
         timereturn = 48
+        # Synthetic data is currently used to approximate real-world conditions.
+        # In practice, the EV energy consumption demand can be linked to real datasets to better reflect realistic consumption patterns.
         if self.used_soc == 0:# When the working state is calculated for the first time, determine the expected energy consumption for the current stage.
             worktimefactor =   1 * math.cos(workingtime*math.pi/timereturn) + 1# Fixed at 1. Periodic variation over 0-48 with a trigonometric cycle from 2 to 0 to 2.
             stage_need_soc = self.AVERGE_WORKSOC * worktimefactor * emergencefactor  + random.random()*0.1# Fixed energy consumption is mean consumption multiplied by the working-time factor and emergency factor, plus random energy consumption.
